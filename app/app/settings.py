@@ -140,6 +140,6 @@ CELERY_CREATE_MISSING_QUEUES = True
 CELERY_BEAT_SCHEDULE = {
     "check_markets": {
         "task": "amm.tasks.check_markets",
-        "schedule": timedelta(seconds=10),
+        "schedule": timedelta(seconds=30),
     },
 }
