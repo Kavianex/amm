@@ -1,0 +1,46 @@
+version: "3.3"
+services:
+  amm-server:
+    container_name: amm-server
+    restart: unless-stopped
+    image: amm
+    build: .
+    ports:
+      - "127.0.0.1:8001:8000"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --noreload"
+    env_file:
+      - ../env.app
+    depends_on:
+      - amm-redis
+      - amm-db
+    volumes:
+      - ../data/telegram/migrations:/app/telegram/migrations
+  amm-worker:
+    container_name: amm-worker
+    restart: unless-stopped
+    image: amm
+    command: celery -A app worker -c 4 -l INFO -n amm-worker
+    env_file:
+      - ../env.app
+    depends_on:
+      - amm-db
+  amm-db:
+    restart: always
+    container_name: amm-db
+    image: mysql:latest
+    # ports:
+    #   - "127.0.0.1:3306:3306"
+    volumes:
+      - ../data/amm-mysql:/etc/mysql/conf.d
+      - ../data/amm-mysql-data:/var/lib/mysql
+    env_file:
+      - env.app
+  amm-rabbitmq:
+    container_name: amm-rabbitmq
+    restart: unless-stopped
+    image: rabbitmq:3.8-management-alpine
+    ports:
+      - "127.0.0.1:5672:5672"
+      - "127.0.0.1:15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
