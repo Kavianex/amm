@@ -44,6 +44,10 @@ class KavianexRestAPI:
         result = self.request(method='DELETE', endpoint=f'/order/byId/{order_id}', params={})
         return result
 
+    def cancel_all_symbol_orders(self, symbol, *args, **kwargs):
+        result = self.request(method='DELETE', endpoint=f'/order/{self.account_id}/{symbol}', params={})
+        return result
+
     def send_order(self, order, *args, **kwargs):
         result = self.request(method='POST', endpoint=f'/order/', params=order)
         return result

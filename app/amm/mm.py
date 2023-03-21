@@ -12,11 +12,13 @@ class MarketMaker:
         asks = {order['price']: order for order in maker_orders if order['side']== enums.OrderSide.short.value} 
         canceling_orders, new_orders = self.get_balancing_orders(bids, asks)
         self.rebalance_orders(canceling_orders=canceling_orders, new_orders=new_orders)
+
     def rebalance_orders(self, canceling_orders, new_orders):
         new_order_idx = 0
-        for canceling_order in canceling_orders:
-            self.cancel_order(canceling_order)
-            time.sleep(0.5)
+        self.strategy.maker.client.cancel_all_symbol_orders(self.strategy.symbol)
+        # for canceling_order in canceling_orders:
+        #     self.cancel_order(canceling_order)
+        #     time.sleep(0.5)
             # if new_orders[new_order_idx:]:
             #     self.send_order(new_orders[new_order_idx])
             #     new_order_idx += 1
