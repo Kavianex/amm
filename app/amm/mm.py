@@ -18,8 +18,8 @@ class MarketMaker:
             # if new_orders[new_order_idx:]:
             #     self.send_order(new_orders[new_order_idx])
             #     new_order_idx += 1
-        # for new_order in new_orders[new_order_idx:]:
-        #     self.send_order(new_order)
+        for new_order in new_orders[new_order_idx:]:
+            self.send_order(new_order)
 
     
     def get_balancing_orders(self,bids, asks):

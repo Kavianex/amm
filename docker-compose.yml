@@ -17,7 +17,7 @@ services:
     container_name: amm-worker
     restart: unless-stopped
     image: amm
-    command: sh -c "cd app && celery -A app worker -c 4 -l INFO -n amm-worker"
+    command: sh -c "cd app && celery -A app worker -c 1 -l INFO -n amm-worker"
     env_file:
       - env.app
     depends_on:
