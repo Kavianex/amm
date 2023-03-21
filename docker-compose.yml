@@ -11,7 +11,6 @@ services:
     env_file:
       - env.app
     depends_on:
-      - amm-db
       - amm-rabbitmq
   amm-worker:
     container_name: amm-worker
@@ -22,17 +21,6 @@ services:
       - env.app
     depends_on:
       - amm-server
-  amm-db:
-    restart: always
-    container_name: amm-db
-    image: mysql:latest
-    # ports:
-    #   - "127.0.0.1:3306:3306"
-    # volumes:
-    #   - ../data/amm-mysql:/etc/mysql/conf.d
-    #   - ../data/amm-mysql-data:/var/lib/mysql
-    env_file:
-      - env.app
   amm-rabbitmq:
     container_name: amm-rabbitmq
     restart: unless-stopped
