@@ -11,6 +11,7 @@ services:
     env_file:
       - env.app
     depends_on:
+      - amm-db
       - amm-rabbitmq
   amm-worker:
     container_name: amm-worker
@@ -21,6 +22,14 @@ services:
       - env.app
     depends_on:
       - amm-server
+  amm-db:
+    container_name: amm-db
+    restart: unless-stopped
+    image: postgres:13.3
+    volumes:
+      - ../data/postgres_data:/var/lib/postgresql/data
+    env_file:
+      - env.app
   amm-rabbitmq:
     container_name: amm-rabbitmq
     restart: unless-stopped
