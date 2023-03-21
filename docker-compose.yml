@@ -7,7 +7,7 @@ services:
     build: .
     ports:
       - "127.0.0.1:8001:8000"
-    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --noreload"
+    command: sh -c "cd app && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --noreload"
     env_file:
       - env.app
     depends_on:
@@ -18,8 +18,9 @@ services:
   amm-worker:
     container_name: amm-worker
     restart: unless-stopped
+    build: .
     image: amm
-    command: celery -A app worker -c 4 -l INFO -n amm-worker
+    command: sh -c "cd app && celery -A app worker -c 4 -l INFO -n amm-worker"
     env_file:
       - env.app
     depends_on:
