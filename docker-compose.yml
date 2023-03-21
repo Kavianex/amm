@@ -22,6 +22,15 @@ services:
       - env.app
     depends_on:
       - amm-server
+  amm-beat:
+    container_name: amm-beat
+    restart: unless-stopped
+    image: amm
+    command: sh -c "cd app && celery -A app beat -l INFO"
+    env_file:
+      - env.app
+    depends_on:
+      - amm-server
   amm-db:
     container_name: amm-db
     restart: unless-stopped
