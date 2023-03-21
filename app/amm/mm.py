@@ -1,5 +1,6 @@
 from amm import models
 from utils import enums
+import time
 
 class MarketMaker:
     def __init__(self, strategy) -> None:
@@ -15,11 +16,13 @@ class MarketMaker:
         new_order_idx = 0
         for canceling_order in canceling_orders:
             self.cancel_order(canceling_order)
+            time.sleep(0.5)
             # if new_orders[new_order_idx:]:
             #     self.send_order(new_orders[new_order_idx])
             #     new_order_idx += 1
         for new_order in new_orders[new_order_idx:]:
             self.send_order(new_order)
+            time.sleep(0.5)
 
     
     def get_balancing_orders(self,bids, asks):
