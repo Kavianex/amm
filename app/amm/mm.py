@@ -60,7 +60,7 @@ class MarketMaker:
         last_price = int(last_price)
         maker_orders = []
         order_value = 1000
-        for i in range(1, 11):
+        for i in range(1, 5):
             for side in [enums.OrderSide.long.value, enums.OrderSide.short.value]:
                 price = last_price + (i if side == enums.OrderSide.short.value else -i)
                 quantity = order_value / price
