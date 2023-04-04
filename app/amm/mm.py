@@ -29,19 +29,19 @@ class MarketMaker:
     
     def get_balancing_orders(self,bids, asks):
         canceling_orders = []
-        open_orders = self.get_open_orders()
-        for open_order in open_orders:
-            open_order_price = open_order['price']
-            if open_order['side'] == enums.OrderSide.long.value:
-                if open_order_price not in bids:
-                    canceling_orders.append(open_order)
-                else:
-                    del bids[open_order_price]
-            else:
-                if open_order_price not in asks:
-                    canceling_orders.append(open_order)
-                else:
-                    del asks[open_order_price]
+        # open_orders = self.get_open_orders()
+        # for open_order in open_orders:
+        #     open_order_price = open_order['price']
+        #     if open_order['side'] == enums.OrderSide.long.value:
+        #         if open_order_price not in bids:
+        #             canceling_orders.append(open_order)
+        #         else:
+        #             del bids[open_order_price]
+        #     else:
+        #         if open_order_price not in asks:
+        #             canceling_orders.append(open_order)
+        #         else:
+        #             del asks[open_order_price]
         new_orders = list(bids.values()) + list(asks.values())
         return canceling_orders, new_orders
 
